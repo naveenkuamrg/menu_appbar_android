@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/search_bar"
+        android:title="back"
+        android:icon="@drawable/baseline_content_paste_search_24"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/nav_setting"
+        android:title="setting"/>
+    <item android:id="@+id/clear_history"
+        android:title="clear history"/>
+
+</menu>
