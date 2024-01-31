@@ -23,6 +23,7 @@ class SettingFragment : Fragment(R.layout.home_fragment){
             add(i.toString())
         }
     }
+    lateinit var  recyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class SettingFragment : Fragment(R.layout.home_fragment){
             layoutManager = LinearLayoutManager(requireContext())
             adapter = SettingAdapter(requireContext(),data)
         }
+        recyclerView = view
 
         return  view
     }
@@ -46,7 +48,6 @@ class SettingFragment : Fragment(R.layout.home_fragment){
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.apply {
             title = "Setting"
-            setIcon(R.drawable.ic_back_arrow)
             setHomeAsUpIndicator(R.drawable.ic_back_arrow)
             setDisplayHomeAsUpEnabled(true);
 
@@ -63,6 +64,22 @@ class SettingFragment : Fragment(R.layout.home_fragment){
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.clear()
+    }
+
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        Log.i("TAG","New check")
+        when(item.itemId){
+            101->{
+                data.removeAt(item.groupId)
+                recyclerView.adapter?.notifyItemRemoved(item.groupId)
+            }
+            102 -> {
+                data.add(item.groupId,"new insert Row")
+                recyclerView.adapter?.notifyItemInserted(item.groupId)
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 
 }
