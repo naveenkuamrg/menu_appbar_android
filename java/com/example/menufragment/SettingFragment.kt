@@ -30,6 +30,16 @@ class SettingFragment : Fragment(R.layout.home_fragment){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            title = "Setting"
+            setHomeAsUpIndicator(R.drawable.ic_back_arrow)
+            setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     override fun onCreateView(
@@ -48,11 +58,6 @@ class SettingFragment : Fragment(R.layout.home_fragment){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.apply {
-            title = "Setting"
-            setHomeAsUpIndicator(R.drawable.ic_back_arrow)
-            setDisplayHomeAsUpEnabled(true);
-        }
 
     }
 
