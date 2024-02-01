@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -59,16 +60,19 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
 
                R.id.nav_home ->{
+                   fragmentManager.popBackStack("setting", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                    val transaction = fragmentManager.beginTransaction()
                    transaction.replace(fragmentContainer.id, HomeFragment())
                    transaction.commit()
                }
                R.id.nav_setting ->{
+                   fragmentManager.popBackStack("setting", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                    val transaction = fragmentManager.beginTransaction()
                    transaction.replace(fragmentContainer.id, SecondFragment())
                    transaction.commit()
                }
                R.id.nav_delete ->{
+                   fragmentManager.popBackStack("setting", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                    val transaction = fragmentManager.beginTransaction()
                    transaction.replace(fragmentContainer.id, DeleteFragment())
                    transaction.commit()

@@ -3,14 +3,21 @@ package com.example.menufragment
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
+import android.view.ActionMode
 import android.view.ContextMenu
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Objects
 
 class SettingAdapter(val context : Context,val data : MutableList<String>) : RecyclerView.Adapter<CViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CViewHolder {
@@ -25,6 +32,8 @@ class SettingAdapter(val context : Context,val data : MutableList<String>) : Rec
     override fun onBindViewHolder(holder: CViewHolder, position: Int) {
         holder.textView.text = data[position]
     }
+
+
 }
 
 
@@ -46,9 +55,12 @@ class CViewHolder(itemView: RItemView) : RecyclerView.ViewHolder(itemView),View.
     }
 
 
+
+
 }
 
 class RItemView(context : Context) : LinearLayout(context){
+
     init {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
         addView(TextView(context).apply {
@@ -61,6 +73,7 @@ class RItemView(context : Context) : LinearLayout(context){
         })
         gravity = Gravity.CENTER_VERTICAL
         setBackgroundColor(Color.LTGRAY)
+
     }
 
 }

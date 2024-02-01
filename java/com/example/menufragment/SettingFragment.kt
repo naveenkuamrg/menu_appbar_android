@@ -2,6 +2,7 @@ package com.example.menufragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +15,7 @@ import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -50,10 +52,10 @@ class SettingFragment : Fragment(R.layout.home_fragment){
             title = "Setting"
             setHomeAsUpIndicator(R.drawable.ic_back_arrow)
             setDisplayHomeAsUpEnabled(true);
-
         }
 
     }
+
 
 
     override fun onStop() {
