@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.FragmentContainer
@@ -47,6 +48,11 @@ class MainActivity : AppCompatActivity() {
 //
 //            constraintSet.applyTo(this)
 //        }
+
+        //custome actionBar
+//        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
+//        supportActionBar?.setDisplayShowCustomEnabled(true)
+//        supportActionBar?.setCustomView(R.layout.custom_action_bar)
 
         setContentView(R.layout.activity_main)
         fragmentContainer = findViewById<View>(R.id.fragment_container_view_tag)

@@ -5,23 +5,32 @@ import android.graphics.Color
 import android.util.Log
 import android.view.ActionMode
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 
-class SecondAdapter(var context : Context,var data : MutableList<VMode>) : RecyclerView.Adapter<SecondViewHolder>() {
+class SecondAdapter(var context : Context,var data : MutableList<VMode>) : RecyclerView.Adapter<SecondViewHolder>(),PopupMenu.OnMenuItemClickListener {
 
     var actionMode : ActionMode? = null
     private  val actionModeCallback  = object : ActionMode.Callback{
+
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             mode?.menuInflater?.inflate(R.menu.contextual_menu,menu)
             Log.i("Tag","vn - ${actionMode?.menu.toString()}")
+
             return  true
         }
 
@@ -42,8 +51,8 @@ class SecondAdapter(var context : Context,var data : MutableList<VMode>) : Recyc
                     }
                 }
             }
-
             notifyDataSetChanged()
+            mode?.finish()
             return  true
         }
 
@@ -58,6 +67,8 @@ class SecondAdapter(var context : Context,var data : MutableList<VMode>) : Recyc
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SecondViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_view, parent, false)
+//        return SecondViewHolder(itemView)
         return  SecondViewHolder(CView(context))
     }
 
@@ -79,6 +90,10 @@ class SecondAdapter(var context : Context,var data : MutableList<VMode>) : Recyc
             holder.itemView.setBackgroundColor(Color.BLACK)
         }
 
+        holder.imagView.setOnClickListener {
+            showMenu(holder.imagView, position)
+        }
+
         holder.itemView.setOnLongClickListener {
             data[position].isSelected = !data[position].isSelected
             notifyItemChanged(position)
@@ -94,26 +109,85 @@ class SecondAdapter(var context : Context,var data : MutableList<VMode>) : Recyc
 
         }
     }
-}
 
+    fun showMenu(v: View,position: Int) {
+        PopupMenu(context, v).apply {
+            // MainActivity implements OnMenuItemClickListener.
+            setOnMenuItemClickListener(this@SecondAdapter)
+            menu.add(position,101,0,"delete")
+            show()
+        }
+    }
 
-class SecondViewHolder(itemView: CView) : RecyclerView.ViewHolder(itemView){
-    var textView = itemView.findViewById<TextView>(R.id.text)
-}
-
-class CView(context: Context) : LinearLayout(context){
-    init {
-        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-        addView(TextView(context).apply {
-            id = R.id.text
-            layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                setMargins(10,10,10,10)
-                id = R.id.text
-                minHeight = 150
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            101 ->{
+                data.removeAt(item.groupId)
+//                notifyItemRemoved(item.groupId)
+                notifyDataSetChanged()
             }
-            setBackgroundColor(Color.DKGRAY)
-        })
-        gravity = Gravity.CENTER_VERTICAL
+        }
+        return  true
+    }
+}
+
+
+class SecondViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    var textView = itemView.findViewById<TextView>(R.id.textView)
+    var imagView = itemView.findViewById<ImageView>(R.id.image_view)
+}
+
+class CView(context: Context) : ConstraintLayout(context){
+    val textView =  TextView(context).apply {
+        id = R.id.text
+        textAlignment = TEXT_ALIGNMENT_CENTER
+        layoutParams = LayoutParams(0,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            setMargins(10,10,0,10)
+            setPadding(10,30,10,10)
+            id = R.id.textView
+            minHeight = 100
+        }
+        setBackgroundColor(Color.DKGRAY)
+    }
+
+    val imageView = ImageView(context).apply {
+        id = R.id.image_view
+        setImageResource(R.drawable.ic_arrow_drop_down)
+        layoutParams = LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            0
+        )
+        setBackgroundColor(Color.DKGRAY)
+
+    }
+    init {
+        id = View.generateViewId()
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+//            setMargins(10,10,10,10)
+        }
+        addView(textView)
+        addView(imageView)
+
+
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(this)
+        //TextView
+        constraintSet.connect(textView.id,ConstraintSet.TOP,ConstraintSet.PARENT_ID,ConstraintSet.TOP)
+        constraintSet.connect(textView.id,ConstraintSet.BOTTOM,ConstraintSet.PARENT_ID,ConstraintSet.BOTTOM)
+        constraintSet.connect(textView.id,ConstraintSet.START,ConstraintSet.PARENT_ID,ConstraintSet.START)
+        constraintSet.connect(textView.id,ConstraintSet.END,imageView.id,ConstraintSet.START)
+
+
+        //ImageView
+        constraintSet.connect(imageView.id,ConstraintSet.TOP,textView.id,ConstraintSet.TOP)
+        constraintSet.connect(imageView.id,ConstraintSet.BOTTOM,textView.id,ConstraintSet.BOTTOM)
+        constraintSet.connect(imageView.id,ConstraintSet.END,this.id,ConstraintSet.END)
+
+
+        constraintSet.applyTo(this)
+
+
         setBackgroundColor(Color.LTGRAY)
 
     }
