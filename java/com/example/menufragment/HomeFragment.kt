@@ -17,13 +17,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        (activity as AppCompatActivity).supportActionBar?.title = "Home"
         view.findViewById<TextView>(R.id.text).text = "HOME"
     }
 
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+        (activity as AppCompatActivity).supportActionBar?.title = "Home"
         Log.i("TAG","onPrepareOptionsMenu home")
         menu.findItem(R.id.search_bar).isVisible = false
         menu.findItem(R.id.clear_history).isVisible = false

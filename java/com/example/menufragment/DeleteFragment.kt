@@ -19,13 +19,13 @@ class DeleteFragment : Fragment(R.layout.home_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.title = "Delete"
         view.findViewById<TextView>(R.id.text).text = "DELETE"
 
     }
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         Log.i("TAG","onPrepareOptionsMenu delete")
+        (activity as AppCompatActivity).supportActionBar?.title = "Delete"
         menu.findItem(R.id.clear_history).isVisible = false
     }
 }

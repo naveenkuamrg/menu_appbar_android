@@ -41,8 +41,13 @@ class SecondFragment : Fragment(R.layout.home_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).supportActionBar?.title = "History"
+
 //        view.findViewById<TextView>(R.id.text).text = "HISTORY"
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        (activity as AppCompatActivity).supportActionBar?.title = "History"
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
